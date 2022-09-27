@@ -100,7 +100,12 @@ export const NavigationMobile = () => {
         <NavigationList>
           {navigation.map(({ path, label }) => (
             <li key={path}>
-              <NavItem size="mobile" label={label} to={path} />
+              <NavItem
+                size="mobile"
+                label={label}
+                to={path}
+                onClick={toggleOpen}
+              />
             </li>
           ))}
         </NavigationList>
