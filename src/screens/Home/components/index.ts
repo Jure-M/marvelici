@@ -1,0 +1,1 @@
+export { SerchArea } from './SearchArea'
