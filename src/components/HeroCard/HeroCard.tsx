@@ -151,7 +151,7 @@ const HeroCard = ({ id, name, imgUrl, bookmarked }: Hero) => {
   return (
     <HeroCardWrapper>
       <CSSTransition
-        in={showMessage}
+        in={!!(userName && showMessage)}
         nodeRef={nodeRef}
         timeout={500}
         classNames="transition"

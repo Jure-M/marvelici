@@ -1,5 +1,3 @@
-import { Large } from '~/stories/Button.stories'
-
 export const breakpoints = {
   sm: '576px', //mobile
   md: '768px', // tablet

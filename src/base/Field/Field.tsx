@@ -16,7 +16,7 @@ const InputStyled = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.black};
   font-size: 1.8rem;
   padding: 1.2rem 0.7rem;
-  width: 100%;
+  max-width: 100%;
 
   @media ${devices.mobile} {
     max-width: 30rem;

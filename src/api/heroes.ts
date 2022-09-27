@@ -56,9 +56,7 @@ export const getHeroes = async (
   if (response.ok) {
     return { heroes: data?.results, count: data?.count, total: data?.total }
   } else {
-    const error = new Error(
-      errors?.map((e: { message: string }) => e.message).join('\n') ?? 'unknown'
-    )
+    const error = 'something went wrong'
     return Promise.reject(error)
   }
 }
