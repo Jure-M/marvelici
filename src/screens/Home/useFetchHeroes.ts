@@ -111,7 +111,7 @@ export const useFetchHeroes = (): IuseFethHeroes => {
         setStatus('idile')
       } else if (searchTerm && isSerchTermValid) {
         // if current page is 1 for old serch fetche heroes
-        // else set current page to 1, and let pagechange fetch heroes
+        // else set current page to 1, and let page change fetch heroes
         if (currentPage === 1) {
           const controller = new AbortController()
           controllerRef.current = controller
@@ -138,7 +138,6 @@ export const useFetchHeroes = (): IuseFethHeroes => {
     if (!searchTerm) return
 
     if (searchTerm && isSerchTermValid) {
-      console.log('fetching from current page')
       const controller = new AbortController()
       controllerRef.current = controller
       fetchHeroes()
