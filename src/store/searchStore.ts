@@ -10,6 +10,13 @@ type SearchCache = {
   }[]
 }
 
+const isTextOnlyLetters = (text: string): boolean => {
+  if (text.match(/^[A-Za-z]+$/)) {
+    return true
+  }
+  return false
+}
+
 const setSearchCache = (
   cache: SearchCache[],
   term: string,
@@ -52,23 +59,37 @@ const setSearchCache = (
   }
 }
 
-const setSerchTerm = (searchTerm: string): string => searchTerm
+const setSearchTerm = (searchTerm: string): string => searchTerm
+
+const setCurrentPage = (page: number): number => page
 
 interface Store {
   searchTerm: string
+  isSerchTermValid: boolean
+  currentPage: number
   serchCache: SearchCache[]
-  setSerchTerm: (name: string) => void
+  setSearchTerm: (name: string) => void
+  setCurrentPage: (page: number) => void
   setSearchCache: (page: number, numOfPages: number, heroes: Hero[]) => void
   //
 }
 
 export const useSerchStore = create<Store>((set, get) => ({
   searchTerm: '',
+  isSerchTermValid: true,
+  currentPage: 1,
   serchCache: [],
-  setSerchTerm(name) {
+  setSearchTerm(name) {
     set(state => ({
       ...state,
-      searchTerm: setSerchTerm(name)
+      searchTerm: setSearchTerm(name),
+      isSerchTermValid: isTextOnlyLetters(name)
+    }))
+  },
+  setCurrentPage(page) {
+    set(state => ({
+      ...state,
+      currentPage: setCurrentPage(page)
     }))
   },
   setSearchCache(page, numOfPages, heroes) {

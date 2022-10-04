@@ -9,7 +9,8 @@ type JSONResponse = {
     count: number
     total: number
   }
-  errors?: Array<{ message: string }>
+  status?: string
+  code?: number
 }
 
 type GetHeroesResponse = {
@@ -51,12 +52,11 @@ export const getHeroes = async (
     }
   )
 
-  const { data, errors }: JSONResponse = await response.json()
+  const { data, status, code }: JSONResponse = await response.json()
 
   if (response.ok) {
     return { heroes: data?.results, count: data?.count, total: data?.total }
   } else {
-    const error = 'something went wrong'
-    return Promise.reject(error)
+    return Promise.reject(new Error(status))
   }
 }

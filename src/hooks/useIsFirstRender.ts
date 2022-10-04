@@ -1,0 +1,13 @@
+import * as React from 'react'
+
+export const useIsFirstRender = (): boolean => {
+  const isFirstRender = React.useRef(true)
+
+  if (isFirstRender.current) {
+    isFirstRender.current = false
+
+    return true
+  }
+
+  return isFirstRender.current
+}

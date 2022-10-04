@@ -18,6 +18,7 @@ import { Spacer } from '../../../styles/utils'
 
 // types
 import { Hero } from '../../../types/hero'
+import { FetchStatus } from '../types'
 
 // store
 import { useBookmarksStore } from '../../../store/bookmarksStore'
@@ -30,20 +31,20 @@ const LoaderContainer = styled.div`
 `
 
 interface ISearchAreaProps {
-  loading: boolean
-  error: boolean
+  status: FetchStatus
   searchTerm: string
   heroes: Hero[]
+  isInputValid: boolean
   numberOfPages: number
   currentPage: number
   handlePageChange: (page: number) => void
 }
 
 export const SerchArea = ({
-  loading,
-  error,
+  status,
   searchTerm,
   heroes,
+  isInputValid,
   numberOfPages,
   currentPage,
   handlePageChange
@@ -57,7 +58,7 @@ export const SerchArea = ({
     return { ...hero, bookmarked: !!isMatch }
   })
 
-  if (loading) {
+  if (status === 'fetching') {
     return (
       <LoaderContainer>
         <Loader />
@@ -65,7 +66,7 @@ export const SerchArea = ({
     )
   }
 
-  if (!loading && error) {
+  if (status === 'error') {
     return (
       <PageMessage
         imgSrc={explosion}
@@ -75,11 +76,17 @@ export const SerchArea = ({
     )
   }
 
-  if (!loading && heroes.length === 0 && searchTerm.trim()) {
+  if (status === 'idile' && !isInputValid) {
+    return (
+      <PageMessage imgSrc={villains} message="nice try, please be serious" />
+    )
+  }
+
+  if (status === 'idile' && searchTerm && heroes.length === 0) {
     return <PageMessage imgSrc={villains} message="no heroes found" />
   }
 
-  if (!loading && !searchTerm.trim()) {
+  if (status === 'idile' && !searchTerm) {
     return (
       <PageMessage
         imgSrc={marvelHeros}
@@ -90,11 +97,11 @@ export const SerchArea = ({
 
   return (
     <div>
-      {!loading && (
+      {status === 'idile' && (
         <PageContainer>
           <>
             <HeroesGrid heroes={heroesWithBookMark} />
-            {!loading && heroes.length > 0 && (
+            {heroes.length > 0 && (
               <>
                 <Spacer />
                 <Pagination
